@@ -1,0 +1,69 @@
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Parent = screenGui
+mainFrame.Size = UDim2.new(0, 300, 0, 300)
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -150)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Draggable = true
+
+local title = Instance.new("TextLabel")
+title.Parent = mainFrame
+title.Size = UDim2.new(1, 0, 0, 50)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+title.BorderSizePixel = 0
+title.Text = "Break in"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 24
+
+local function createButton(parent, text, positionY, callback)
+    local button = Instance.new("TextButton")
+    button.Parent = parent
+    button.Size = UDim2.new(1, -20, 0, 40)
+    button.Position = UDim2.new(0, 10, 0, positionY)
+    button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    button.BorderSizePixel = 0
+    button.Text = text
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.Font = Enum.Font.SourceSans
+    button.TextSize = 20
+    button.MouseButton1Click:Connect(callback)
+    return button
+end
+
+local roles = {
+    {name = "Swat", remoteRole = "SwatGun"},
+    {name = "Gun", remoteRole = "Gun"},
+    {name = "Chips", remoteRole = "Chips"},
+    {name = "Sword", remoteRole = "Sword"},
+    {name = "Teddy bear", remoteRole = "TeddyBloxpin"}
+}
+
+local totalButtons = #roles
+local buttonHeight = (mainFrame.Size.Y.Offset - 50 - 20) / totalButtons 
+
+for i, role in ipairs(roles) do
+    createButton(mainFrame, role.name, 50 + (i - 1) * buttonHeight, function()
+        local A_1 = role.remoteRole
+        local A_2 = true
+        local Event = game:GetService("ReplicatedStorage").RemoteEvents.OutsideRole
+        Event:FireServer(A_1, A_2)
+    end)
+end
+
+local footer = Instance.new("TextLabel")
+footer.Parent = mainFrame
+footer.Size = UDim2.new(1, 0, 0, 20)
+footer.Position = UDim2.new(0, 0, 1, -20)
+footer.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+footer.BorderSizePixel = 0
+footer.Text = "t.me/tolik_scripter"
+footer.TextColor3 = Color3.fromRGB(255, 255, 255)
+footer.Font = Enum.Font.SourceSans
+footer.TextSize = 16
+footer.TextTransparency = 0.5

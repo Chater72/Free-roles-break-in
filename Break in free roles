@@ -1,4 +1,5 @@
 local screenGui = Instance.new("ScreenGui")
+screenGui.ResetOnSpawn = false
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 local mainFrame = Instance.new("Frame")
@@ -67,3 +68,10 @@ footer.TextColor3 = Color3.fromRGB(255, 255, 255)
 footer.Font = Enum.Font.SourceSans
 footer.TextSize = 16
 footer.TextTransparency = 0.5
+
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "Break in succefuly loaded";
+    Text = "Script successfully loaded by: t.me/tolik_scripter";
+	Icon = "rbxassetid://2005276185",
+    Duration = 5
+})
